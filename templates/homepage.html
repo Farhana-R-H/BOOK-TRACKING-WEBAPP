@@ -1,0 +1,217 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MYBOOKJOURNAL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+    }
+
+    nav {
+      background-color: #1e1e1e;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    nav .nav-links a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    .heading-section {
+      text-align: center;
+      padding: 2rem 1rem 1rem 1rem;
+    }
+
+    .heading-section h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .heading-section p {
+      font-size: 1rem;
+      color: #bbb;
+    }
+
+    .section {
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .card {
+      position: relative;
+      width: 260px;
+      height: 320px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.1));
+    }
+
+    .card-content {
+      position: absolute;
+      bottom: 0;
+      padding: 1rem;
+      color: white;
+      width: 100%;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .card-content h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.2rem;
+    }
+
+    .card-content p {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-content button {
+      padding: 0.5rem 1rem;
+      border: none;
+      background-color: #ffffff30;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .card-content button:hover {
+      background-color: #ffffff50;
+    }
+
+    .contact {
+      background-color: #1a1a1a;
+      padding: 2rem;
+      text-align: center;
+      color: #bbb;
+    }
+
+    .contact h2 {
+      margin-bottom: 1rem;
+    }
+    .btn {
+  display: inline-block;
+  background-color: #444;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">MYBOOKJOURNAL</div>
+    <div class="nav-links">
+      <a href="{% url 'landing' %}">Home</a>
+      <a href="{% url 'contact_us' %}">Contact Us</a>
+      <a href="{% url 'about' %}">About Us</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    </div>
+  </nav>
+
+  <div class="heading-section">
+    <h2>Track the Books That Shape You</h2>
+    <p>Keep a beautiful record of every book you read, from highlights and reflections to progress and favorites. Your personal reading journey, all in one place.
+
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <img src="https://images.pexels.com/photos/28071945/pexels-photo-28071945/free-photo-of-a-room-with-bookshelves-and-a-potted-plant.jpeg?auto=compress&cs=tinysrgb&w=600" alt="New Favourite">
+      <div class="card-content">
+        <h3>New Favourite</h3>
+        <p>Your shelf just got better.</p>
+        <a href="{% url 'add_book' %}" class="btn">Add Book</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.pexels.com/photos/11175624/pexels-photo-11175624.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Edit Your Book">
+      <div class="card-content">
+        <h3>Rewrite</h3>
+        <p>Your words, reimagined.</p>
+        <a href="{% url 'search_edit_books' %}" class="btn">Edit Book</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.pexels.com/photos/11563556/pexels-photo-11563556.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Book Log">
+      <div class="card-content">
+        <h3>Book Log</h3>
+        <p>Past reads, preserved.</p>
+        <a href="{% url 'book_list' %}" class="btn">View Log</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.pexels.com/photos/11267970/pexels-photo-11267970.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Unfinished Stories">
+      <div class="card-content">
+        <h3>Unfinished Stories</h3>
+        <p>Half-read, still loved.</p>
+        <a href="{% url 'unfinished_books' %}" class="btn">Continue</a>
+      
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.pexels.com/photos/4659800/pexels-photo-4659800.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Quote Recorder">
+      <div class="card-content">
+        <h3>Quote Recorder</h3>
+        <p>A line that stayed with me</p>
+        <a href="{% url 'notepad' %}" class="btn">Note</a>
+       
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="contact">
+    <h2>Contact Us</h2>
+    <p>Email: support@mybookjournal.com | Instagram: @mybookjournal</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset password</title>
+</head>
+<body>
+    <form action="passwordreset" method="post">
+        {%csrf_token%}
+
+        Username <input type="txt" name="username"><br>
+        New Password <input type="password" name="password">
+
+        
+        <input type="submit" value="Reset Password">
+
+        <a href="{%url 'login' %}">Back to Login</a>
+
+        </form>
+<p>{{msg2}}</p>
+</body>
+</html>

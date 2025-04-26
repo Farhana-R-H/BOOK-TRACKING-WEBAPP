@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books List</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url("https://images.pexels.com/photos/696407/pexels-photo-696407.jpeg?auto=compress&cs=tinysrgb&w=600");
+            background-repeat: no-repeat;
+            background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+            color: #f1f1f1;  /* Light text color */
+            margin: 40px;
+        }
+        h1 {
+    font-size: 3.2em;
+    color: #ffd580; /* Soft pastel gold */
+    text-align: center;
+    font-family: 'Palatino Linotype', 'Georgia', serif; /* Elegant serif font */
+    letter-spacing: 3px;
+    text-shadow: 1px 1px 6px rgba(255, 223, 120, 0.6);
+    margin-bottom: 0.5em;
+    animation: fadeInTitle 2s ease-in-out;
+}
+
+/* Smooth fade-in effect */
+@keyframes fadeInTitle {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+        h2 {
+    font-size: 2em;
+    color: #f1c6e7;  /* Pastel pink color */
+    text-align: center;
+    font-family: 'Georgia', serif;
+    margin-top: -10px;  /* Move the heading slightly up */
+}
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #555;  /* Dark border for the table */
+            text-align: center;
+            font-size: 1.1em;
+        }
+        th {
+            background-color: #333;
+            color: #f1f1f1;
+        }
+        td {
+            background-color: #222;
+        }
+        button {
+            padding: 6px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .no-books {
+            text-align: center;
+            color: #e74c3c;  /* Red color for 'No books found' */
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>The Pages I've Turned: A Story of Books</h1>  <!-- Poetic and aesthetic title -->
+    <h2>The Enchanted Book List</h2>  <!-- Aesthetic subtitle -->
+
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if books %}
+                {% for book in books %}
+                    <tr>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.status }}</td>
+                        <td>
+                            {% if not book.completed %}
+                                <form method="POST" action="{% url 'mark_as_completed' book.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit">Mark as Completed</button>
+                                </form>
+                            {% else %}
+                                Completed
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4" class="no-books">No books found.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+</body>
+</html>

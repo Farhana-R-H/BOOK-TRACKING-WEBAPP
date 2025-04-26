@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Book</title>
+    <style>
+        body {
+            background-color:gray;
+            font-family: Arial, sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .btn {
+  display: inline-block;
+  background-color: #444;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+        .container {
+            max-width: 700px;
+            margin: 60px auto;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.75);
+            border-radius: 15px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #ffd700;
+            color: black;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ffcc00;
+        }
+
+        .cover-preview {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .cover-preview img {
+            max-height: 250px;
+            border-radius: 10px;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #ccc;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Book</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            {% if book.cover %}
+                <div class="cover-preview">
+                    <p>Current Cover:</p>
+                    <img src="{{ book.cover.url }}" alt="{{ book.title }}">
+                </div>
+            {% endif %}
+
+            <a href="{% url 'edit_book' book.pk %}" class="btn">Edit</a>
+
+        </form>
+        <a href="{% url 'search_edit_books' %}" class="back-link">← Back to Book Log</a>
+    </div>
+</body>
+</html>

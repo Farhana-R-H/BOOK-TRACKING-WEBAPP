@@ -1,0 +1,111 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Book</title>
+    <style>
+        body {
+            background-color: black;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 60px 40px;
+        }
+
+        .search-bar {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .search-bar input {
+            width: 70%;
+            padding: 15px;
+            font-size: 18px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+        }
+
+        .book-result {
+            background-color: rgba(0, 0, 0, 0.6);
+            margin: 30px auto;
+            width: 80%;
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .book-cover {
+            width: 120px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .book-info {
+            flex: 1;
+        }
+
+        .book-actions a {
+            margin-right: 15px;
+            padding: 10px 15px;
+            background-color: #ffd700;
+            color: black;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .book-actions a:hover {
+            background-color: #ffcc00;
+        }
+
+        .no-results {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 20px;
+            color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-bar">
+            <form method="get">
+                <input type="text" name="q" placeholder="Search by title or status..." value="{{ query }}">
+            </form>
+        </div>
+
+        {% for book in books %}
+            <div class="book-result">
+                {% if book.cover %}
+                    <img src="{{ book.cover.url }}" alt="{{ book.title }}" class="book-cover">
+                {% endif %}
+                <div class="book-info">
+                    <h2>{{ book.title }}</h2>
+                    <p><strong>Author:</strong> {{ book.author }}</p>
+                    <p><strong>Status:</strong> {{ book.status }}</p>
+                    <p><strong>Rating:</strong> {{ book.rating }}/5</p>
+                </div>
+                <div class="book-actions">
+                    <a href="{% url 'edit_book' book.pk %}">Edit</a>
+                    <a href="{% url 'delete_book' book.pk %}">Delete</a>
+                </div>
+            </div>
+        {% empty %}
+            <div class="no-results">No matching books found.</div>
+        {% endfor %}
+    </div>
+</body>
+</html>
