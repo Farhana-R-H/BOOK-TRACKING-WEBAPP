@@ -1,48 +1,94 @@
-# Book Tracking Web App
+# 📚 MyBookJournal
 
-A simple web application to track books, manage reading progress, and log reviews. Ideal for readers who want to stay organized and motivated during their reading journey.
+**Type:** Personal Reading Journal Web App  
+**Tech Stack:** Django (Backend), HTML, CSS, JavaScript (Frontend)  
+**Role:** Full Stack Developer (Solo Project)
 
-## Features
+---
 
-- Add books with titles, authors, and descriptions
-- Track reading progress and set goals
-- Rate and review books you've read
-- User authentication (sign up, login)
-- Responsive design for mobile and desktop use
+## 📝 Overview
 
-## Tech Stack
+**MyBookJournal** is a web-based application designed to help readers log books, track reading sessions, and journal their thoughts. Built with Django, it offers an intuitive interface and a feature-rich dashboard to manage your reading journey.
 
-- **Backend**: Django
-- **Frontend**: HTML, CSS, JavaScript (Bootstrap)
-- **Database**: MySQL
-- **Authentication**: Django's built-in authentication system
+This project is free and open to all readers looking to cultivate better habits and document their reading experiences.
 
-## Installation
+---
 
-1. Clone this repository:
-    ```bash
-    git clone https://github.com/Farhana-R-H/BOOK-TRACKING-WEBAPP.git
-    ```
+## 🚀 Features
 
-2. Navigate to the project directory:
-    ```bash
-    cd BOOK-TRACKING-WEBAPP
-    ```
+### 🌐 Homepage (Public Interface)
 
-3. Install dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
+- **Carousel Walkthrough** — Step-by-step guide on using the site
+- **Sections** — About Us, FAQ, Reviews, Contact Us
+- **Social Footer** — Social media links for engagement
+- **Call to Action** — Encourages free signup
 
-4. Run migrations:
-    ```bash
-    python manage.py migrate
-    ```
+---
 
-5. Start the development server:
-    ```bash
-    python manage.py runserver
-    ```
+### 👤 User Dashboard (Post Signup/Login)
 
-6. Open your browser and visit `http://127.0.0.1:8000/` to see the app in action.
+Once logged in, users access a personalized dashboard with 5 major sections:
+
+#### 1. 📚 Add Book
+- Input: title, author, genre, pages, dates, and cover image
+- Set status: "Reading", "Completed", etc.
+- Add personal review and rating
+
+#### 2. 📖 Book Logs
+- Displays all added books
+- Options: Edit / Delete
+- Auto-updated progress bar
+- Completion detection based on page count
+
+#### 3. ⏱️ Reading Sessions
+- Shows only currently reading books
+- Click to log reading session
+- Track pages read with date
+- Progress updates automatically
+
+#### 4. ❌ Dropped / Incomplete Books
+- Shows abandoned books
+- Includes a search bar
+
+#### 5. 📊 Reading Statistics
+- **Monthly Stats:** Top 3 reviewed books
+- **Yearly Goals:** Reading goals tracker
+- **Graphs:** Visual insights on reading performance
+- Metrics like:
+  - Total completed books
+  - Total pages read
+  - Fastest and longest books
+
+---
+
+## 👤 Profile Page
+
+Accessible via navbar:
+
+### Sidebar Info:
+- Profile picture
+- Username
+- Full name
+- Short bio
+
+### Subsections:
+
+- **Edit Profile:** Add/update photo, DOB, email, name, gender
+- **Wishlist:** Track dreams/goals; mark as completed
+- **Notepad:** Notes/reminders with full edit/save flow
+- **Review Section:** Share feedback about the platform
+- **Weekly Prompt:** Fun question to engage the user (answer + history view)
+
+---
+
+## 🛠️ Setup Instructions (Local)
+
+```bash
+git clone https://github.com/Farhana-R-H/BOOK-TRACKING-WEBAPP.git
+cd BOOK-TRACKING-WEBAPP
+python -m venv venv
+source venv/bin/activate  # For Linux/macOS
+venv\Scripts\activate     # For Windows
+pip install -r requirements.txt
+python manage.py runserver
 
