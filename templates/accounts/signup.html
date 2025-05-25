@@ -1,0 +1,192 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Sign Up</title>
+   <style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #121212;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #cf5236;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background-color: #393939;
+        border-radius: 12px;
+        padding: 35px 45px;
+        width: 500px;
+        box-shadow: 0 0 20px rgba(207, 82, 54, 0.3);
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    h2 {
+        text-align: center;
+        color: #cf5236;
+        margin-bottom: 25px;
+        font-size: 30px;
+    }
+
+    form div {
+        margin-bottom: 18px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 6px;
+        color: #cf5236;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        background-color: #2a2a2a;
+        color: #fff;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        color: #ccc;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+        width: auto;
+        margin-right: 8px;
+    }
+
+    .errorlist {
+        color: #ff4c4c;
+        margin: 5px 0 0 0;
+        padding: 0;
+        list-style: none;
+        font-size: 0.9em;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #cf5236;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #b2452e;
+    }
+
+    .non-field-errors {
+        color: #ff4c4c;
+        margin-bottom: 15px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .back-button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #cf5236;
+        text-decoration: none;
+        background: none;
+        border: none;
+        transition: color 0.3s ease;
+    }
+
+    .back-button:hover {
+        color: #b2452e;
+    }
+
+    a {
+        color: #cf5236;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    p.note {
+        margin-top: 20px;
+        color: #aaa;
+        font-size: 14px;
+        text-align: center;
+    }
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'home' %}" class="back-button" title="Back to Home">&#8592;</a>
+        <h2>Sign Up</h2>
+
+        <form method="post" novalidate>
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+        <div class="non-field-errors">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+
+    <div>
+        {{ form.first_name.label_tag }}
+        {{ form.first_name }}
+        {{ form.first_name.errors }}
+    </div>
+
+    <div>
+        {{ form.last_name.label_tag }}
+        {{ form.last_name }}
+        {{ form.last_name.errors }}
+    </div>
+
+   
+
+    <div>
+        {{ form.password.label_tag }}
+        {{ form.password }}
+        {{ form.password.errors }}
+    </div>
+
+    <div>
+        {{ form.confirm_password.label_tag }}
+        {{ form.confirm_password }}
+        {{ form.confirm_password.errors }}
+    </div>
+
+    <div class="checkbox-label">
+        {{ form.agree_terms }}
+        {{ form.agree_terms.label_tag }}
+        {{ form.agree_terms.errors }}
+    </div>
+
+    <button type="submit">Register</button>
+</form>
+
+    </div>
+</body>
+</html>
+

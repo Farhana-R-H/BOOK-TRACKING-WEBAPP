@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Profile - Book Dashboard</title>
+ <style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+  }
+
+  .sidebar {
+    width: 250px;
+    background-color: #343333;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height:900px;
+  }
+
+  .profile-img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid black;
+  }
+
+  .sidebar h2 {
+    margin-top: 15px;
+    text-align: center;
+    color: #d5a79c;
+  }
+
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 30px;
+    font-size: 16px;
+    width: 100%;
+  }
+
+  .sidebar li {
+    margin-bottom: 15px;
+  }
+
+  .sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 8px;
+    text-align: left;
+  }
+
+  .sidebar a:hover {
+    background-color: #cf5236;
+  }
+
+  .main-content {
+    display: flex;
+    gap: 30px;
+    align-items: stretch; /* stretch children vertically */
+    padding: 40px;
+    background-color: black;
+    height: 100vh;
+    overflow-y: hidden; /* prevent double scroll */
+  }
+
+  
+  .wishlist-empty {
+  text-align: center;
+  position: relative;
+  left: -20px; /* Move left slightly */
+}
+
+  .sidebar-fullname {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    margin-top: 8px;
+    text-align: start;
+  }
+
+  .sidebar-bio-container {
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 10px;
+    width: 100%;
+    max-width: 220px;
+    color: #d1d5db;
+    text-align: left;
+    position: relative;
+  }
+
+  .sidebar-bio-text {
+    font-size: 14px;
+    line-height: 1.4;
+    overflow: hidden;
+    max-height: 60px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    transition: all 0.3s ease;
+  }
+
+  .sidebar-bio-text.expanded {
+    max-height: none;
+    -webkit-line-clamp: unset;
+  }
+
+  .toggle-bio-btn {
+    background: none;
+    border: none;
+    color: #cf5236;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 5px;
+    padding: 0;
+  }
+
+  .toggle-bio-btn:hover {
+    text-decoration: underline;
+  }
+
+  .progress-red {
+    background-color: #cf5236;
+  }
+
+  .progress-orange {
+    background-color: #ffae42;
+  }
+
+  .progress-green {
+    background-color: #28a745;
+  }
+
+  .goal-container,
+  .wishlist-container {
+    box-sizing: border-box;
+    margin-bottom: 30px;
+  }
+
+  .wishlist-container {
+    flex: 1 1 60%;
+    min-width: 400px;
+    background: #c7c4c4;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    height: 75%;
+    overflow-y: auto;
+  }
+
+  .wishlist-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #cf5236;
+  }
+
+  .prompt-container {
+    flex: 0 0 550px;
+    background: #1e1e1e;
+    border-radius: 12px;
+    padding: 20px;
+    color: #cf5236;
+    box-shadow: 0 0 8px #cf5236aa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 70%;
+    overflow-y: auto;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    
+  }
+
+  .prompt-container h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+
+  .prompt-question {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffb48f;
+  }
+
+  textarea#promptAnswer {
+    width: 100%;
+    flex-grow: 1;
+    min-height: 150px;
+    max-height: 300px;
+    border-radius: 8px;
+    border: 1.5px solid #cf5236;
+    background-color: #121212;
+    color: #f1d1c9;
+    padding: 10px;
+    resize: vertical;
+    font-size: 14px;
+    font-family: inherit;
+    margin-bottom: 15px;
+     align-items: center;      /* center horizontally */
+  justify-content: center;  /* center vertically */
+  text-align: center;  
+  }
+  .prompt-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centers all form elements horizontally */
+  gap: 15px;
+}
+
+ .prompt-btn {
+  background-color: #cf5236;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  width: 550px; /* same fixed width */
+}
+
+.view-previous-btn {
+  background-color: #cf5236;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  width: 550px; /* same fixed width */
+}
+
+
+
+  .prompt-btn:hover,
+  .view-previous-btn:hover {
+    background-color: #e86e48;
+  }
+
+  .thank-you-message {
+    font-size: 16px;
+    color: #ffa573;
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  .modal-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background-color: #2a2a2a;
+    border-radius: 12px;
+    padding: 25px;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    color: #e4e3e3;
+    
+  }
+
+  .modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 700;
+  }
+
+  .close-modal {
+    float: right;
+    cursor: pointer;
+    color: #f57c5f;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    .main-content {
+      flex-direction: column;
+      align-items: stretch;
+      height: auto;
+    }
+
+    .wishlist-container, .prompt-container {
+      width: 100%;
+      height: auto;
+      max-height: none;
+      overflow-y: visible;
+    }
+  }
+</style>
+
+</head>
+<body>
+
+<div style="display: flex; height: 100vh;">
+  
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div style="text-align: center;">
+      {% if user.profile.profile_picture %}
+        <img src="{{ user.profile.profile_picture.url }}" alt="Profile Image" class="profile-img" />
+      {% else %}
+        <img src="https://via.placeholder.com/80" alt="Profile Image" class="profile-img" />
+      {% endif %}
+      <h2 style="margin-top: 15px;">{{ user.username }}</h2>
+     {% if user.profile.bio %}
+  <div class="sidebar-bio-container">
+    {% if user.profile.full_name %}
+      <p class="sidebar-fullname">{{ user.profile.full_name }}</p>
+    {% endif %}
+
+    <p class="sidebar-bio-text" id="bioText">{{ user.profile.bio }}</p>
+    
+    {% if user.profile.bio|length > 100 %}
+      <button class="toggle-bio-btn" onclick="toggleBio()">Read more</button>
+    {% endif %}
+  </div>
+{% endif %}
+    </div>
+
+    <ul>
+      <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+      <li><a href="{% url 'notepad' %}">My notepad</a></li>
+      <li><a href="{% url 'wishlist' %}">Book Wishlist</a></li>
+      <li><a href="{% url 'submit_review' %}">Give a Review</a></li>
+      <li><a href="{% url 'homeface' %}">My Dashboard</a></li>
+      <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="wishlist-container">
+      <h2>Top 10 Wishlist Books</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <ul class="wishlist-list">
+          {% for book in priority_books %}
+            <li>
+              <label class="wishlist-label">
+                <input type="checkbox" name="book_id" value="{{ book.id }}" onchange="this.form.submit()">
+                {{ book.name }}
+              </label>
+            </li>
+          {% empty %}
+           <p class="wishlist-empty">No unread books in your top 10 list.</p>
+          {% endfor %}
+        </ul>
+      </form>
+    </div>
+
+    <div class="prompt-container">
+      {% if active_prompt %}
+        <h2>Weekly Prompt 🌙</h2>
+        <form method="POST" id="promptForm">
+          {% csrf_token %}
+          <div class="prompt-question">{{ active_prompt.question }}</div>
+          <textarea id="promptAnswer" name="prompt_answer" placeholder="Write your answer here..." required></textarea>
+          <button type="submit" class="prompt-btn">Submit Answer</button>
+        </form>
+      {% else %}
+        <h2>Thank You! 🎉</h2>
+        <p class="thank-you-message">Thanks for answering the prompt. Come back next week for a new question.</p>
+      {% endif %}
+      <button class="view-previous-btn" onclick="openModal()">View Previous Prompts</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-bg" id="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <h3>Previous Prompts & Answers</h3>
+
+    {% if previous_answers %}
+      <ul style="list-style:none; padding-left: 0;">
+        {% for ans in previous_answers %}
+          <li style="margin-bottom:20px;">
+            <strong>Q:</strong> {{ ans.prompt.question }}<br>
+            <strong>A:</strong> {{ ans.answer|linebreaksbr }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No previous prompts answered yet.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  function openModal() {
+    document.getElementById('modal').style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+  }
+
+  // Optional: close modal if clicked outside content
+  window.onclick = function(event) {
+    const modal = document.getElementById('modal');
+    if (event.target === modal) {
+      closeModal();
+    }
+  };
+
+  // Toggle bio text expand/collapse
+  function toggleBio() {
+    const bioText = document.getElementById('bioText');
+    const btn = event.target;
+    bioText.classList.toggle('expanded');
+    btn.textContent = bioText.classList.contains('expanded') ? 'Read less' : 'Read more';
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+<div class="container">
+    <h2>Note Details</h2>
+    <div class="note-card">
+        <p>{{ note.text }}</p>
+        <small>Created on: {{ note.created_at|localtime|date:"F j, Y, g:i a" }}</small>
+    </div>
+</div>

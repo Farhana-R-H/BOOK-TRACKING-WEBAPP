@@ -1,0 +1,137 @@
+<!-- accounts/templates/accounts/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #cf5236;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h2 {
+            color: #cf5236;
+            font-size: 32px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        form {
+             position: relative;
+            background-color: #393939;
+            padding: 35px 45px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(207, 82, 54, 0.25);
+            width: 500px;
+            height: 500px;
+            box-sizing: border-box;
+        }
+
+        /* Style Django form fields output as <p> */
+        form p {
+            margin-bottom: 18px;
+        }
+
+        form p label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #cf5236;
+        }
+
+        form p input {
+            width: 100%;
+            padding: 12px;
+            height: 45px;
+            border: none;
+            border-radius: 6px;
+            background-color: #2a2a2a;
+            color: #fff;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        form button {
+            width: 100%;
+             margin-top: 20px; 
+            padding: 12px;
+            height: 45px;
+            background-color: #cf5236;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        form button:hover {
+            background-color: #b2452e;
+        }
+
+        p.note {
+            margin-top: 20px;
+            color: #ccc;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        a {
+            color: #cf5236;
+            font-weight: bold;
+            text-decoration: none;
+            
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        form p:last-of-type {
+    margin-bottom: 40px;
+}
+.back-arrow {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #cf5236;
+    font-size: 2.5rem;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.back-arrow:hover {
+    color: #b2452e;
+}
+
+
+    </style>
+</head>
+<body>
+    
+   <form method="post">
+    <a href="{% url 'home' %}" class="back-arrow">&#8592;</a>
+
+    <h2>Hello Again, Reader!</h2>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+    <p class="note">
+  <a href="{% url 'password_reset_request' %}">Forgot password?</a> Don't have an account? <a href="{% url 'signup' %}">Sign up here</a>
+</p>
+    
+</form>
+
+   
+</body>
+</html>

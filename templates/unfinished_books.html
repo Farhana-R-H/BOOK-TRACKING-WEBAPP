@@ -9,12 +9,26 @@
             margin: 0;
             font-family: 'Georgia', serif;
             color: #fff;
-            background-image: url('https://images.pexels.com/photos/13186083/pexels-photo-13186083.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); /* Add your image path here */
+           background-color: rgb(57, 52, 52);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
         }
-
+        #backButton {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+   
+    padding: 8px 14px;
+    
+    font-weight: bold;
+    z-index: 999;
+  
+    
+}
         .container {
             background-color: rgba(0, 0, 0, 0.7);
             margin: 50px auto;
@@ -27,7 +41,7 @@
             text-align: center;
             font-size: 2.5em;
             margin-bottom: 20px;
-            color: #ffd580;
+            color: #cf5236;
         }
 
         form {
@@ -78,8 +92,10 @@
 <body>
 
 <div class="container">
-    <h1>Unfinished Books</h1>
+    <a href="{% url 'homeface' %}" id="backButton">←</a>
 
+    <h1>Unfinished Books</h1>
+    
     <form method="get">
         <input type="text" name="search" placeholder="Search by title or author...">
         <button type="submit">Search</button>

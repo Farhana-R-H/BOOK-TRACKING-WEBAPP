@@ -16,25 +16,37 @@
     }
 
     nav {
-      background-color: #1e1e1e;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+  background-color: black;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    nav .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #ffffff;
-    }
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* keeps nav above other content */
+  
+}
+nav .logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+}
 
-    nav .nav-links a {
-      margin-left: 1.5rem;
-      text-decoration: none;
-      color: #ffffff;
-      font-weight: 500;
-    }
+nav .nav-links a {
+  margin-left: 1.5rem;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+nav .nav-links a:hover {
+  color: #cf5236;
+  text-shadow: 0 0 8px rgba(207, 82, 54, 0.6);
+}
+
 
     .heading-section {
       text-align: center;
@@ -138,25 +150,29 @@
   font-size: 14px;
   margin-top: 10px;
 }
+.btn:hover {
+      background-color: #cf5236;
+    }
   </style>
 </head>
 <body>
   <nav>
     <div class="logo">MYBOOKJOURNAL</div>
     <div class="nav-links">
-      <a href="{% url 'landing' %}">Home</a>
-      <a href="{% url 'contact_us' %}">Contact Us</a>
-      <a href="{% url 'about' %}">About Us</a>
-      <a href="{% url 'logout' %}">Logout</a>
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'profile' %}">My Profile</a>
+
     </div>
   </nav>
 
   <div class="heading-section">
+  {% if user.is_authenticated %}
+    <h2>Welcome back, {{ user.username }}!</h2>
+  {% else %}
     <h2>Track the Books That Shape You</h2>
-    <p>Keep a beautiful record of every book you read, from highlights and reflections to progress and favorites. Your personal reading journey, all in one place.
-
-    </p>
-  </div>
+  {% endif %}
+  <p>Keep a beautiful record of every book you read, from highlights and reflections to progress and favorites. Your personal reading journey, all in one place.</p>
+</div>
 
   <div class="section">
     <div class="card">
@@ -171,27 +187,29 @@
     <div class="card">
       <img src="https://images.pexels.com/photos/11175624/pexels-photo-11175624.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Edit Your Book">
       <div class="card-content">
-        <h3>Rewrite</h3>
-        <p>Your words, reimagined.</p>
-        <a href="{% url 'search_edit_books' %}" class="btn">Edit Book</a>
+        <h3>Your Library</h3>
+        <p>Track, edit, and stay organized.</p>
+        <a href="{% url 'search_edit_books' %}" class="btn">Manage Books
+
+</a>
       </div>
     </div>
 
     <div class="card">
       <img src="https://images.pexels.com/photos/11563556/pexels-photo-11563556.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Book Log">
       <div class="card-content">
-        <h3>Book Log</h3>
-        <p>Past reads, preserved.</p>
-        <a href="{% url 'book_list' %}" class="btn">View Log</a>
+        <h3>Reading Tracker</h3>
+        <p>Log your daily pages.</p>
+        <a href="{% url 'reading_books' %}" class="btn">Add Pages</a>
       </div>
     </div>
 
     <div class="card">
       <img src="https://images.pexels.com/photos/11267970/pexels-photo-11267970.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Unfinished Stories">
       <div class="card-content">
-        <h3>Unfinished Stories</h3>
-        <p>Half-read, still loved.</p>
-        <a href="{% url 'unfinished_books' %}" class="btn">Continue</a>
+        <h3>Book Breaks</h3>
+        <p>A pause, not the end.</p>
+        <a href="{% url 'unfinished_books' %}" class="btn">View Details</a>
       
       </div>
     </div>
@@ -199,9 +217,9 @@
     <div class="card">
       <img src="https://images.pexels.com/photos/4659800/pexels-photo-4659800.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Quote Recorder">
       <div class="card-content">
-        <h3>Quote Recorder</h3>
-        <p>A line that stayed with me</p>
-        <a href="{% url 'notepad' %}" class="btn">Note</a>
+        <h3>Reading Insights</h3>
+        <p>See how far you've come.</p>
+        <a href="{% url 'dashboard' %}" class="btn">View Stats</a>
        
 
 
@@ -209,9 +227,6 @@
     </div>
   </div>
 
-  <div class="contact">
-    <h2>Contact Us</h2>
-    <p>Email: support@mybookjournal.com | Instagram: @mybookjournal</p>
-  </div>
+ 
 </body>
 </html>

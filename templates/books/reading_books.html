@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books I'm Reading</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000; /* Fullscreen black background */
+            color: #fff;
+        }
+
+        h1 {
+            text-align:center;
+            padding: 20px 0;
+            color: #cf5236;
+        }
+
+        .book-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content:flex-start;
+            padding: 20px;
+        }
+
+        .book-item {
+            width: 120px;
+            border: 1px solid #555;
+            padding: 8px;
+            text-align: center;
+            background-color: #111; /* Slightly lighter than black for card */
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .book-item:hover {
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        }
+
+        .book-cover {
+            width: 100px;
+            height: 140px;
+            object-fit: cover;
+            margin-bottom: 8px;
+            background-color: #222;
+        }
+
+        .book-title {
+            font-size: 14px;
+            color: #fff;
+        }
+
+        a.book-link {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+        }
+
+        .no-books {
+            text-align: center;
+            color: #888;
+            padding: 20px;
+        }
+         #backButton {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+   
+    padding: 8px 14px;
+    
+    font-weight: bold;
+    z-index: 999;
+  
+    
+}
+    </style>
+</head>
+<body>
+    <a href="{% url 'homeface' %}" id="backButton">←</a>
+    <h1>Currently Reading</h1>
+    <div class="book-grid">
+        {% for book in books %}
+            <a href="{% url 'add_reading_session' book.id %}" class="book-link">
+                <div class="book-item">
+                    {% if book.cover %}
+                        <img src="{{ book.cover.url }}" alt="{{ book.title }}" class="book-cover" />
+                    {% else %}
+                        <div class="book-cover" style="color:#ccc; display:flex; align-items:center; justify-content:center;">No Cover</div>
+                    {% endif %}
+                    <div class="book-title">{{ book.title }}</div>
+                </div>
+            </a>
+        {% empty %}
+            <p class="no-books">No books currently being read.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

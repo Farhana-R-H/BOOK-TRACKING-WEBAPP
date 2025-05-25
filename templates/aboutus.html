@@ -1,73 +1,163 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MYBOOKJOURNAL - Welcome</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us</title>
   <style>
-    * {
+    body {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      background: #4f4e4e;
+      overflow-x: hidden;
     }
-    body, html {
-      height: 100%;
-      font-family: 'Inter', sans-serif;
-    }
-    .background {
-      background-image: url('https://images.pexels.com/photos/18777754/pexels-photo-18777754/free-photo-of-wax-candles-burning-on-book-in-darkness.jpeg');
-      background-size: cover;
-      background-position: center;
-      height: 100vh;
-      width: 100%;
-      position: relative;
+    .about-section:nth-child(1) .about-text h2,
+.about-section:nth-child(1) .about-text p {
+  color: #1b1919;
+}
+ .about-section:nth-child(2) .about-text h2,
+.about-section:nth-child(2) .about-text p {
+  color: #fffbfb;
+}
+
+    .about-section {
       display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 10px;
+      gap: 40px;
+      overflow: hidden;
     }
-    .content {
-      padding: 3rem;
+
+    .about-section:nth-child(even) {
+      flex-direction: row-reverse;
+      background: #1c1c1c;
+    }
+
+    .about-image {
+      flex: 1;
       max-width: 500px;
-      color: #ffffff;
-      border-radius: 10px;
-      margin: 4rem 0 0 5rem;
+      animation: slideInLeft 1.5s ease forwards;
+      opacity: 0;
     }
-    .main-heading {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
+
+    .about-section:nth-child(even) .about-image {
+      animation: slideInRight 1.5s ease forwards;
     }
-    .content p {
-      margin-bottom: 1.2rem;
+
+    .about-text {
+      flex: 1;
+      max-width: 500px;
+    }
+
+    .about-text h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      
+    }
+
+    .about-text p {
+      font-size: 1.1rem;
       line-height: 1.6;
-      font-size: 1rem;
     }
-    @media (max-width: 768px) {
-      .content {
-        margin: 4rem 2rem;
-        padding: 2rem;
-        max-width: 90%;
+
+    @keyframes slideInLeft {
+      0% {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
       }
     }
+
+    @keyframes slideInRight {
+      0% {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+ .about-image img {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+
+  /* Add this line for the border */
+  border: 3px solid #cf5236;
+}
+
+
+
+    @media (max-width: 768px) {
+      .about-section {
+        flex-direction: column;
+        text-align: center;        
+      }
+    }
+    #closeButton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 28px;
+  color: white;
+  text-decoration: none;
+  background-color: #cf5236;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  z-index: 999;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#closeButton:hover {
+  background-color: #b3452d;
+  transform: scale(1.1);
+}
+.about-section:nth-child(1) {
+  padding: 20px 10px; /* Reduced from 50px to 30px */
+  max-height: 200px; /* Optional: limit max height */
+}
+    
   </style>
 </head>
 <body>
-  <div class="background">
-    <div class="content">
-      <h1 class="main-heading">Nice to meet you</h1>
-      <p><strong>Hey reader, welcome to MYBOOKJOURNAL — your cozy digital shelf.</strong></p>
-      Whether you're logging a new favorite, jotting down a late-night book thought, or just checking in on your progress, we’re right here with you.
-      We believe every book leaves a mark, and every note you write matters.
-      This isn’t just a place to track — it’s a space to reflect, to grow, and to celebrate your journey through pages.
-      Forgot to finish that novel from last summer? We saved it.
-      Wrote a beautiful review and want to tweak it later? It’s here.
-      Challenging yourself to read more this year? We’ll help you stay on track.
-      <p><strong>MYBOOKJOURNAL is your personal book sanctuary.</strong><br>Quiet. Thoughtful. Yours.</p>
+<a href="{% url 'home' %}" id="closeButton">&times;</a>
+
+  <section class="about-section">
+    <div class="about-image">
+      <img src="{% static 'images/girl1.jpg' %}"  alt="Our Team">
     </div>
-  </div>
+    <div class="about-text">
+      <h2>Who We Are</h2>
+     <p>At MYBOOKJOURNAL, we're readers first — just like you. We created this space to give book lovers a thoughtful and personal way to track their reading journey. Whether you're diving into fiction, exploring memoirs, or revisiting childhood favorites, we’re here to make every note and every memory count.</p>
+
+    </div>
+  </section>
+
+  <section class="about-section">
+    <div class="about-image">
+      <img src="{% static 'images/girl2.jpg' %}"  alt="Our Vision">
+    </div>
+    <div class="about-text">
+      <h2>Our Vision</h2>
+     <p>We envision a world where reading isn't just tracked, but treasured. Our goal is to inspire mindful reading habits, help you reflect on the stories that shape you, and build a digital sanctuary where your literary journey can grow freely — quietly, meaningfully, and uniquely yours.</p>
+
+    </div>
+  </section>
+
 </body>
 </html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Wishlist</title>
+  <style>
+    /* Back to Profile fixed button style */
+    .back-profile-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #9b8476;
+      color: white;
+      border: none;
+      padding: 3px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      text-decoration: none;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+    }
+    .back-profile-btn:hover {
+      background-color: #c16b49;
+    }
+
+    /* Flex container for book item */
+    .book-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* Push children to edges */
+      margin-bottom: 10px;
+      font-size: 17px;
+    }
+
+    /* Group checkbox and book name */
+    .book-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Delete button styles */
+    .delete-btn {
+      background-color: #dc3545;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+    .delete-btn:hover {
+      background-color: #b02a37;
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 0;  background: #fdfdfd;">
+
+  <!-- Header -->
+  <div style="background-color: #333; color: white; padding: 15px;">
+    <h2 style="margin: 0;"> My Wishlist</h2>
+  </div>
+
+  <!-- Notebook area -->
+  <div style="padding: 30px; background: repeating-linear-gradient(
+      to bottom,
+      #fff,
+      #fff 28px,
+      #979494 27px
+    ); height: 90vh; overflow-y: auto;">
+
+    <!-- Add Book Form -->
+    <form method="POST" style="margin-bottom: 30px; display: flex; align-items: center; gap: 10px;">
+      {% csrf_token %}
+      <input type="text" name="book_name" placeholder="Add a book you love..." 
+             style="flex: 1; padding: 10px; font-size: 16px; border: 1px solid #ccc;">
+      <button type="submit" style="padding: 10px 20px; background-color: #28a745; color: white; border: none; cursor: pointer;">Add</button>
+    </form>
+
+    <!-- Wishlist Display -->
+    <ul style="list-style: none; padding-left: 0;">
+      {% for book in wishlist %}
+        <li class="book-item">
+          <div class="book-info">
+            <!-- Mark as read form -->
+            <form method="POST" action="{% url 'mark_as_read' book.id %}">
+              {% csrf_token %}
+              <input type="checkbox" onchange="this.form.submit()" style="width: 18px; height: 18px;">
+              {{ book.name }}
+            </form>
+          </div>
+
+          <!-- Delete form -->
+          <form method="POST" action="{% url 'delete_books' book.id %}">
+            {% csrf_token %}
+            <button type="submit" class="delete-btn" title="Delete this book">Delete</button>
+          </form>
+        </li>
+      {% empty %}
+        <li>No books added yet.</li>
+      {% endfor %}
+    </ul>
+
+  </div>
+
+  <!-- Back to Profile Button -->
+  <a href="{% url 'profile' %}?reload_alert=1" class="back-profile-btn">← Back to Profile</a>
+
+</body>
+</html>

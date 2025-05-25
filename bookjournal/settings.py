@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "books"
+    'books.apps.BooksConfig',
+    
 ]
 
 MIDDLEWARE = [
@@ -77,11 +78,14 @@ WSGI_APPLICATION = 'bookjournal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': "book_journal_db",
-        "USER" : "root",
-        "PASSWORD" : "root" ,
-        "HOST" : "localhost"
-        
+        'NAME': 'book_journal_db',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'init_command': "SET NAMES 'utf8mb4'",
+        },
     }
 }
 
@@ -137,10 +141,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [ BASE_DIR / "static", ]  
 
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = 'homepage'
-LOGOUT_REDIRECT_URL = 'landing'
+LOGIN_REDIRECT_URL = '/homeface/'
+LOGOUT_REDIRECT_URL = '/'
 
-
+USE_TZ = True
+TIME_ZONE = 'Asia/Kolkata'
 
 
 

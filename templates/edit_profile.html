@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Profile</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #121212;
+      color: #cf5236;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: #393939;
+      padding: 35px 45px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(207, 82, 54, 0.25);
+      width: 100%;
+      max-width: 600px;
+      height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    h2 {
+      color: #f7f7f7;
+      font-size: 32px;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    form p {
+      margin-bottom: 18px;
+    }
+
+    form p label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #eaeaea;
+      font-size: 16px;
+    }
+
+    form p input,
+    form p select,
+    form p textarea {
+      width: 100%;
+      padding: 12px;
+      height: 45px;
+      border: none;
+      border-radius: 6px;
+      background-color: #2a2a2a;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    form p textarea {
+      height: 100px;
+      resize: vertical;
+    }
+
+    form p input[type="file"] {
+      padding: 8px;
+      height: auto;
+    }
+    input[type="checkbox"] {
+  width: 16px;    /* smaller width */
+  height: 16px;   /* smaller height */
+  margin-left: 8px; /* spacing from label */
+  vertical-align: middle; /* align nicely with text */
+  cursor: pointer;
+  accent-color: #cf5236; /* changes the checkbox color in modern browsers */
+}
+
+    form button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      height: 45px;
+      background-color: #f0efef;
+      color: rgb(23, 23, 23);
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #b2452e;
+    }
+
+    .back-arrow {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: #cf5236;
+      font-size: 2.5rem;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .back-arrow:hover {
+      color: #b2452e;
+    }
+
+    .profile-pic-preview {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .profile-pic-preview img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #cf5236;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Scrollbar styling (optional) */
+    .container::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .container::-webkit-scrollbar-track {
+      background: #2a2a2a;
+      border-radius: 10px;
+    }
+
+    .container::-webkit-scrollbar-thumb {
+      background: #575656;
+      border-radius: 10px;
+    }
+
+    .container::-webkit-scrollbar-thumb:hover {
+      background: #b2452e;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="{% url 'profile' %}" class="back-arrow">&#8592;</a>
+
+    <h2>Edit Profile</h2>
+
+    {% if user.profile.profile_picture %}
+      <div class="profile-pic-preview">
+        <img src="{{ user.profile.profile_picture.url }}" alt="Current Profile Picture">
+      </div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+
+      <p>
+        {{ form.profile_picture.label_tag }}
+        {{ form.profile_picture }}
+        {{ form.profile_picture.errors }}
+      </p>
+
+      <p>
+        {{ form.full_name.label_tag }}
+        {{ form.full_name }}
+        {{ form.full_name.errors }}
+      </p>
+
+      <p>
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        {{ form.email.errors }}
+      </p>
+
+      <p>
+        {{ form.date_of_birth.label_tag }}
+        {{ form.date_of_birth }}
+        {{ form.date_of_birth.errors }}
+      </p>
+
+      <p>
+        {{ form.bio.label_tag }}
+        {{ form.bio }}
+        {{ form.bio.errors }}
+      </p>
+
+      <p>
+        {{ form.gender.label_tag }}
+        {{ form.gender }}
+        {{ form.gender.errors }}
+      </p>
+
+      <button type="submit">Save Profile</button>
+    </form>
+  </div>
+</body>
+</html>
+
+

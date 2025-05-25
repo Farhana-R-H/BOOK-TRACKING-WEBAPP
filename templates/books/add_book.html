@@ -3,42 +3,79 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Add Book</title>
   <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
+      height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: url('https://images.pexels.com/photos/27273182/pexels-photo-27273182/free-photo-of-a-building-with-a-clock-on-top-and-a-blue-sky.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center fixed;
-      background-size: cover;
+      background-color: #121212;
       color: white;
       display: flex;
-      align-items: center;
       justify-content: center;
-      height: 100vh;
+      align-items: center;
+     
     }
 
-    .form-container {
-  background-color: rgba(18, 19, 20, 0.75);
-  padding: 1.5rem 2rem;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 0 20px rgba(247, 245, 245, 0.1);
+   .container {
+  display: flex;
+  width: 1000px;
   max-height: 80vh;
-  overflow-y: auto;
-  position: absolute;
-  top: 40px; /* Move the box down by 40px */
-  left: 500px; /* Add space from the left edge */
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #757272; /* off-white outline */
+  box-sizing: border-box; /* ensures border is included in width */
 }
 
-   
+
+    .left-column {
+      flex: 1;
+      min-width: 300px;
+     background: url('{% static "images/illustration.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      /* static no scroll */
+    }
+
+    .right-column {
+      flex: 1;
+      padding: 2rem;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #515050 rgba(30, 30, 30, 0.8);
+      display: flex;
+      flex-direction: column;
+      background-color: #464444;
+    }
+
+    /* Scrollbar styling for Webkit browsers */
+    .right-column::-webkit-scrollbar {
+      width: 8px;
+    }
+    .right-column::-webkit-scrollbar-track {
+      background-color: rgba(30, 30, 30, 0.8);
+      border-radius: 10px;
+    }
+    .right-column::-webkit-scrollbar-thumb {
+      background-color: #cf5236;
+      border-radius: 10px;
+      border: 2px solid rgba(30, 30, 30, 0.8);
+    }
+    .right-column::-webkit-scrollbar-thumb:hover {
+      background-color: #e55b3a;
+    }
+
     h1 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      font-size: 2rem;
-      border-bottom: 1px solid #555;
+      margin: 0 0 1.5rem 0;
+      font-weight: 700;
+      border-bottom: 2px solid #cf5236;
       padding-bottom: 0.5rem;
+      color: #cf5236;
     }
 
     label {
@@ -55,41 +92,68 @@
       border: none;
       border-radius: 6px;
       background-color: #222;
-      color: #fff;
+      color: white;
       font-size: 1rem;
+      transition: border 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border: 2px solid #cf5236;
+      background-color: #2a2a2a;
     }
 
     textarea {
       resize: vertical;
+      min-height: 100px;
     }
 
     button {
-      margin-top: 1.5rem;
+      margin-top: 2rem;
       width: 100%;
       padding: 0.75rem;
-      background-color: #444;
+      background-color: #cf5236;
       color: white;
       border: none;
       border-radius: 8px;
       font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
 
     button:hover {
-      background-color: #666;
+      background-color: #e55b3a;
     }
-
+        #backButton {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+   
+    padding: 8px 14px;
+    
+    font-weight: bold;
+    z-index: 999;
+  
+    
+}
   </style>
 </head>
 <body>
-  <div class="form-container">
-    <h1>Add a New Book</h1>
-    <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Save Book</button>
-    </form>
+   <a href="{% url 'homeface' %}" id="backButton">←</a>
+  <div class="container">
+    <div class="left-column"></div>
+    <div class="right-column">
+      <h1>Add a New Book</h1>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Book</button>
+      </form>
+    </div>
   </div>
 </body>
 </html>

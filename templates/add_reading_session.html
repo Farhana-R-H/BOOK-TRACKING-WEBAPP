@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Add Reading Session for {{ book.title }}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000000;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #4f4d4d;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    h2, h3 {
+      color: #cf5236;
+    }
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 24px;
+      color: red;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input[type="number"], input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 20px;
+      background-color: #cf5236;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #b5442e;
+    }
+    .session-list {
+      margin-top: 20px;
+    }
+    .session-item {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="{% url 'reading_books' %}" class="close-btn" title="Close">&times;</a>
+    <h2>📖 {{ book.title }} — Reading Progress</h2>
+
+    <p><strong>Author:</strong> {{ book.author }}</p>
+    <p><strong>Total Pages:</strong> {{ book.total_pages }}</p>
+    <p><strong>Pages Read:</strong> {{ book.pages_read }} / {{ book.total_pages }}</p>
+    <p><strong>Pages Left:</strong> {{ book.pages_left }}</p>
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <label for="id_pages_read">Pages Read Today</label>
+      {{ form.pages_read }}
+
+      <label for="id_date">Date</label>
+      {{ form.date }}
+
+      <button type="submit">➕ Add Session</button>
+    </form>
+
+    <h3>📅 Reading History</h3>
+    <div class="session-list">
+      {% for session in sessions %}
+        <div class="session-item">{{ session.date }}: {{ session.pages_read }} pages</div>
+      {% empty %}
+        <p>No reading sessions yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Review</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: #fefefe;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+   .review-container {
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  background: rgb(24, 23, 23); /* dark box */
+  padding: 30px 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  color: #eae9e9; /* light text inside dark box */
+}
+
+.textarea-wrapper {
+  width: 100%;
+  margin-bottom: 20px; /* space below textarea */
+}
+
+#word-counter {
+  width: 100%;
+  text-align: right;
+  font-size: 13px;
+  color: #cf5236; /* matching star color */
+  margin-top: 5px;
+  box-sizing: border-box;
+  padding-right: 6px;
+}
+
+
+    .review-container:hover {
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    }
+
+    .close-btn {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      font-size: 22px;
+      color: #cf5236;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #eae9e9;
+    }
+
+    .stars {
+      font-size: 36px;
+      color: #cf5236;
+      cursor: pointer;
+      user-select: none;
+      margin-bottom: 10px;
+    }
+
+    .stars span {
+      padding: 0 6px;
+      color: transparent;
+      -webkit-text-stroke: 1px #cf5236;
+      transition: all 0.2s ease;
+    }
+
+    .stars .filled {
+      color: #cf5236;
+      -webkit-text-stroke: 0;
+    }
+
+    .rating-title {
+      margin-bottom: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 200px;
+      padding: 12px;
+      border: 1.5px solid #ccc;
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: inherit;
+      resize: vertical;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+      transition: border 0.2s;
+    }
+
+    textarea:focus {
+      border-color: #cf5236;
+      outline: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: #cf5236;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: #b6452e;
+    }
+ 
+
+
+
+  </style>
+</head>
+<body>
+
+  <div class="review-container">
+   <button class="close-btn" id="closeBtn">&times;</button>
+
+
+    <h2>Review</h2>
+
+    <div class="stars" id="stars">
+      <span data-value="1">★</span>
+      <span data-value="2">★</span>
+      <span data-value="3">★</span>
+      <span data-value="4">★</span>
+      <span data-value="5">★</span>
+    </div>
+
+    <div class="rating-title" id="rating-title"></div>
+
+    <form method="POST" id="reviewForm" action="{% url 'submit_review' %}">
+      {% csrf_token %}
+      {{ form.rating }}
+      <!-- hidden input -->
+     <div class="textarea-wrapper">
+    {{ form.text }}
+    <div id="word-counter" style="text-align: right; margin-top: 5px; font-size: 13px; color: #666;">
+  0 / 50 words
+</div>  
+  </div>
+      <!-- textarea -->
+
+      <button type="submit" class="submit-btn">Submit Review</button>
+    </form>
+  </div>
+
+  <script>
+    const stars = document.querySelectorAll('#stars span');
+    const ratingInput = document.getElementById('id_rating');  // Django hidden input
+    const reviewText = document.getElementById('id_text');     // Django textarea
+    const ratingTitle = document.getElementById('rating-title');
+
+    const titles = ['Bad', 'Poor', 'Good', 'Very Good', 'Excellent'];
+    let currentRating = parseInt(ratingInput.value) || 0;
+
+    function updateStars(rating) {
+      stars.forEach((star, i) => {
+        star.classList.toggle('filled', i < rating);
+      });
+      ratingTitle.textContent = rating > 0 ? titles[rating - 1] : '';
+    }
+
+    stars.forEach(star => {
+      star.addEventListener('click', function () {
+        currentRating = parseInt(this.dataset.value);
+        ratingInput.value = currentRating;
+        updateStars(currentRating);
+      });
+    });
+
+    updateStars(currentRating);  // Set stars if pre-filled
+
+    document.getElementById('reviewForm').addEventListener('submit', function (e) {
+      if (!reviewText.value.trim() || currentRating === 0) {
+        e.preventDefault();
+        alert('Please write a review and select a rating.');
+      }
+    });
+  </script>
+  <script>
+    const wordCounter = document.getElementById('word-counter');
+
+function updateWordCounter() {
+  const text = reviewText.value.trim();
+  const words = text === '' ? [] : text.split(/\s+/);
+  const wordCount = words.length;
+
+  if (wordCount > 50) {
+    reviewText.value = words.slice(0, 300).join(' ');
+    wordCounter.textContent = "50 / 50 words (limit reached)";
+  } else {
+    wordCounter.textContent = `${wordCount} / 50 words`;
+  }
+}
+
+// Initial update
+updateWordCounter();
+
+// Listen for typing
+reviewText.addEventListener('input', updateWordCounter);
+
+  </script>
+
+<script>
+  document.getElementById("closeBtn").addEventListener("click", function () {
+    window.location.href = "{% url 'profile' %}";
+  });
+</script>
+
+
+</body>
+</html>

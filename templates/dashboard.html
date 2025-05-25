@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #eee;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .left {
+            width: 35%;
+            border-right: 2px solid #444;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .left h2 {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            color: #cf5236;
+        }
+
+        .book-card {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            background-color: #2a2a2a;
+            padding: 10px;
+            border-radius: 10px;
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .book-card:hover {
+            background-color: #333;
+        }
+
+        .book-card img {
+            width: 70px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 15px;
+            border-radius: 8px;
+        }
+
+        .book-info h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .book-info p {
+            margin: 3px 0;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .right {
+            width: 65%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            width: 100%;
+            max-width: 900px;
+            padding: 10px;
+            margin: auto;
+        }
+
+        .stat-card {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 150px;
+        }
+
+        .stat-title {
+            font-size: 1rem;
+            margin-bottom: 6px;
+            color: #aaa;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #cf5236;
+        }
+
+        .stat-subtext {
+            font-size: 0.9rem;
+            color: #bbb;
+            margin-top: 4px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 99;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #2a2a2a;
+            margin: 3% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            color: #eee;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            user-select: none;
+            z-index: 10;
+        }
+
+        .close:hover {
+            color: #fff;
+        }
+       .progress-bar {
+    width: var(--progress-width);
+    height: 100%;
+    background-color: #cf5236;
+  }
+
+    </style>
+    
+ 
+
+
+</head>
+<body>
+
+<div class="container">
+    <span class="close" onclick="closeModalAndRedirect()">×</span>
+
+    <!-- LEFT COLUMN -->
+    <div class="left">
+        <h2>Top 3 Reviewed Books</h2>
+
+        {% for book in top_books %}
+       <div class="book-card" onclick="openModal('{{ book.id }}')">
+
+            {% if book.cover %}
+                <img src="{{ book.cover.url }}" alt="{{ book.title }}">
+            {% else %}
+                <img src="https://via.placeholder.com/70x100.png?text=No+Cover" alt="No cover">
+            {% endif %}
+            <div class="book-info">
+                <h3>{{ book.title }}</h3>
+                <p>Rating: {{ book.rating }} ★</p>
+                <p>{{ book.review|truncatewords:10 }}</p>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="modal-{{ book.id }}" class="modal">
+            <div class="modal-content">
+               <span class="close" onclick="closeModal('{{ book.id }}')">&times;</span>
+
+                <h2>{{ book.title }}</h2>
+                <p><strong>Author:</strong> {{ book.author }}</p>
+                <p><strong>Rating:</strong> {{ book.rating }} ★</p>
+                <p><strong>Start:</strong> {{ book.start_date }}</p>
+                <p><strong>End:</strong> {{ book.end_date }}</p>
+                {% if book.cover %}
+                    <img src="{{ book.cover.url }}" alt="{{ book.title }}" style="width: 100px; margin-top: 10px;">
+                {% endif %}
+                <hr>
+                <p style="margin-top:10px;"><strong>Review:</strong></p>
+                <p>{{ book.review }}</p>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- Divider -->
+        <hr style="margin: 30px 0; border-color: #444;">
+
+        <!-- GOAL SECTION -->
+        <div class="goal-container" style="background-color:#2a2a2a; padding: 15px; border-radius: 10px;">
+            <h2 style="color:#cf5236; font-size: 1.2rem; margin-bottom: 10px;">Yearly Reading Goal</h2>
+
+            <form method="post">
+                {% csrf_token %}
+                <label for="id_goal" style="font-size: 0.95rem;">Set Goal (Books):</label><br>
+                {{ form.goal }}
+                <button type="submit" style="margin-top: 8px; background-color: #cf5236; border: none; padding: 6px 12px; color: white; border-radius: 6px; cursor: pointer;">Update</button>
+            </form>
+
+            <p style="margin-top: 12px;">Progress: <strong>{{ books_read }}</strong> / {{ goal.goal }}</p>
+
+            <div style="background-color: #444; width: 100%; height: 14px; border-radius: 10px; overflow: hidden;">
+            <div class="progress-bar" style="--progress-width: {{ progress }}%;"></div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-title">Completed Books</div>
+                <div class="stat-value">{{ completed_books_count }}</div>
+                <div class="stat-subtext">Books marked as completed</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">Pages Read This Month</div>
+                <div class="stat-value">{{ pages_read_this_month }}</div>
+                <div class="stat-subtext">Across all books</div>
+            </div>
+
+            {% if fastest_book %}
+            <div class="stat-card">
+                <div class="stat-title">Fastest Read</div>
+                <div class="stat-value">{{ fastest_book.title }}</div>
+                <div class="stat-subtext">{{ fastest_book.start_date }} → {{ fastest_book.end_date }}</div>
+            </div>
+            {% endif %}
+
+            {% if longest_book %}
+            <div class="stat-card">
+                <div class="stat-title">Longest Book</div>
+                <div class="stat-value">{{ longest_book.title }}</div>
+                <div class="stat-subtext">{{ longest_book.total_pages }} pages</div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- JS for Modal -->
+<script>
+    function openModal(id) {
+        document.getElementById(`modal-${id}`).style.display = 'block';
+    }
+
+    function closeModal(id) {
+        document.getElementById(`modal-${id}`).style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
+
+    function closeModalAndRedirect() {
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.style.display = 'none';
+        });
+        window.location.href = '/homeface';
+    }
+</script>
+
+</body>
+</html>

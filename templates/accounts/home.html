@@ -1,0 +1,792 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Book Journal - Welcome</title>
+  <!-- League Spartan font for FAQ heading -->
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+nav {
+  background-color: black;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* keeps nav above other content */
+  box-shadow: 0 4px 10px rgba(207, 82, 54, 0.1);
+}
+nav .logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+nav .nav-links a {
+  margin-left: 1.5rem;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+nav .nav-links a:hover {
+  color: #cf5236;
+  text-shadow: 0 0 8px rgba(207, 82, 54, 0.6);
+}
+
+
+    html, body {
+      scroll-behavior: smooth;
+      font-family: Arial, sans-serif;
+    }
+
+    section {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      text-align: center;
+      padding: 40px;
+    }
+
+    /* Section 1: Hero / Login */
+    #hero {
+      background: url('{% static "images/background.jpg" %}') no-repeat center center/cover;
+      position: relative;
+    }
+
+    
+
+    /* Section 2: How To Use Carousel */
+/* Full carousel section background */
+#how-to-use {
+  background-color: black;
+  padding: 60px 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* Section heading */
+#how-to-use h2 {
+  font-family: 'League Spartan', sans-serif;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #cf5236;
+}
+
+/* Carousel container with black border and curved edges */
+#how-to-use > .carousel-container {
+  max-width: 1000px;
+  width: 100%;
+  min-height: 500px;
+  background-color: #323131; /* Changed here */
+  border: 5px solid #000000;
+  border-radius: 50px;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* Slide container */
+.carousel-slide {
+  display: flex;
+  transition: transform 0.5s ease;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.step {
+  min-width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #000000;  /* ✅ Black background */
+  color: #fff;
+  z-index: 1;
+}
+
+
+/* Background images for each step */
+.step {
+  background-color: #646060; /* Solid black background */
+  /* keep the rest of the styles */
+}
+
+/* Optional dark overlay for readability */
+.step::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+/* Bring text content above overlay */
+.step > * {
+  z-index: 2;
+}
+
+.step div {
+  font-size: 48px;
+  margin-bottom: 15px;
+  color: #cf5236;
+}
+
+.step h3 {
+  margin-bottom: 15px;
+  color: #eee;
+}
+
+.step p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #ddd;
+}
+
+/* Navigation arrows */
+#prevBtn, #nextBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #cf5236;
+  border: none;
+  color: white;
+  font-size: 24px;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  user-select: none;
+  z-index: 3;
+}
+
+#prevBtn { left: 15px; }
+#nextBtn { right: 15px; }
+
+
+/* Also ensure dots container has transparent bg */
+#dots {
+  background-color: transparent;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+
+#dots .dot {
+  height: 14px;
+  width: 14px;
+  margin: 0 7px;
+  background-color: #777;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#dots .dot.active {
+  background-color: #cf5236;
+}
+
+
+    /* Section 3: FAQ */
+    #faq {
+      background-color: black;
+      padding: 60px 40px;
+      color: white;
+      width: 100%;   /* full width */
+      display: flex;
+      justify-content: center;  /* center container horizontally */
+      height: auto !important;
+      flex-direction: column;
+    }
+
+    .faq-container {
+      max-width: 800px;
+      width: 100%;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #faq h2 {
+      font-family: 'League Spartan', sans-serif;
+      text-align: center;
+      color: #cf5236;
+      margin-bottom: 30px;
+      width: 100%;
+    }
+
+    /* FAQ Items */
+    .faq-item {
+      border-bottom: 1px solid #555;
+      padding: 15px 0;
+      cursor: pointer;
+      user-select: none;
+      width: 100%;
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .arrow {
+      transition: transform 0.3s ease, color 0.3s ease;
+      color: #f0f0f0;
+      font-size: 1.2rem;
+      user-select: none;
+    }
+
+    .faq-item:hover .arrow {
+      color: #cf5236;
+    }
+
+    .arrow.open {
+      transform: rotate(90deg);
+      color: #cf5236;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      margin-top: 8px;
+      color: #ddd;
+      font-weight: normal;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .faq-answer.open {
+      max-height: 500px; /* enough height for answer */
+    }
+
+    /* Section 4: Reviews */
+    #reviews {
+      background-color: black;
+      height: auto !important;
+      padding: 60px 40px;
+    }
+
+    /* Section 4: Footer */
+    #footer {
+      background-color: #313131;
+      flex-direction: column;
+      font-size: 0.9rem;
+      padding: 20px 40px;
+    }
+
+    h1, h2 {
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      max-width: 800px;
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="logo">MYBOOKJOURNAL</div>
+  <div class="nav-links">
+      <a href="{% url 'home' %}">Home</a>
+     <a href="{% url 'contact_us' %}">Contact Us</a>
+      <a href="{% url 'about' %}">About Us</a>
+    <a href="#faq">FAQ</a>
+    <a href="#reviews">Reviews</a>
+
+    {% if user.is_authenticated %}
+      <a href="{% url 'homeface' %}">Dashboard</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'signup' %}">Sign Up</a>
+    {% endif %}
+  </div>
+</nav>
+
+
+  <!-- Section 1: Hero -->
+  <section id="hero">
+   
+  </section>
+
+ <!-- Section 2: How To Use Carousel -->
+<section id="how-to-use">
+  <h2>Getting Started with MyBookJournal</h2>
+  <div class="carousel-container">
+    <div class="carousel-slide">
+      <div class="step">
+        <div>📖</div>
+        <h3>Add a New Book</h3>
+        <p>Enter the book title, author, start date, and your reading status.</p>
+      </div>
+
+      <div class="step">
+        <div>⏳</div>
+        <h3>Track Your Progress</h3>
+        <p>Update your reading status anytime: reading, completed, or dropped.</p>
+      </div>
+
+      <div class="step">
+        <div>✍️</div>
+        <h3>Write Your Review</h3>
+        <p>After finishing, rate the book, upload photos, and add your notes.</p>
+      </div>
+
+      <div class="step">
+       <div>📋</div>
+       <h3>Organize Notes & Wishlist</h3>
+       <p>Use the notepad to jot down ideas, important thoughts and</p>
+       <p> keep track of books you plan to read using the wishlist.</p>
+       </div>
+
+      
+      <div class="step">
+       <div>👤</div>
+       <h3>Personalize Your Profile</h3>
+       <p>Edit your profile details, set reading goals, and track your yearly </p>
+        <p>challenge progress all in one place.</p>
+     </div>
+
+      
+    </div>
+
+    <button id="prevBtn">&#10094;</button>
+    <button id="nextBtn">&#10095;</button>
+
+    <div id="dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+       <span class="dot"></span>
+    </div>
+  </div>
+</section>
+
+  <!-- Section 3: FAQ -->
+  <section id="faq">
+    <div class="faq-container">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item" tabindex="0">
+        <div class="faq-question">
+         Why do I need to sign up to use the website?
+          <span class="arrow">&#9654;</span>
+        </div>
+        <div class="faq-answer">
+         Signing up unlocks all features like your personal dashboard, goal tracking, wishlist, and notepad access — helping you build your personalized reading journey.
+        </div>
+      </div>
+
+      <div class="faq-item" tabindex="0">
+        <div class="faq-question">
+        What can I do from the dashboard after signing up?
+          <span class="arrow">&#9654;</span>
+        </div>
+        <div class="faq-answer">
+         You can add, view, and delete books, write notes in your notepad, track your reading goals, and manage your wishlist — all from one place.
+        </div>
+      </div>
+
+      <div class="faq-item" tabindex="0">
+        <div class="faq-question">
+         How does the Notepad work and what is it for?
+          <span class="arrow">&#9654;</span>
+        </div>
+        <div class="faq-answer">
+        The notepad is a free space to jot down anything — to-do lists, thoughts, reminders, or personal ideas — unrelated to your reading logs.
+        </div>
+      </div>
+
+      <div class="faq-item" tabindex="0">
+        <div class="faq-question">
+         How does the progress bar function in the profile page?
+          <span class="arrow">&#9654;</span>
+        </div>
+        <div class="faq-answer">
+         The progress bar shows how close you are to your reading goal. As you mark books complete, the bar shifts from red to green and displays a success message once you reach 100%.
+
+
+        </div>
+      </div>
+
+      <div class="faq-item" tabindex="0">
+        <div class="faq-question">
+          How can I personalize my profile?
+          <span class="arrow">&#9654;</span>
+        </div>
+        <div class="faq-answer">
+          By clicking the profile option in the nav bar, you can upload a profile picture, add your full name, a motto or quote, and more details.
+        </div>
+      </div>
+
+      <div class="faq-item" tabindex="0">
+        <div class="faq-question">
+          Can I edit or update my reading goals or book entries later?
+          <span class="arrow">&#9654;</span>
+        </div>
+        <div class="faq-answer">
+          Yes, you can update or delete your books, modify start or end dates, or even change your yearly goal count at any time from your dashboard for flexibility.
+        </div>
+      </div>
+
+      <div class="faq-item" tabindex="0">
+        <div class="faq-question">
+          Is my wishlist and notepad data visible to others?
+          <span class="arrow">&#9654;</span>
+        </div>
+        <div class="faq-answer">
+         No, your wishlist and notepad entries are completely private. Only you can view and manage them through your personal dashboard.
+
+
+        </div>
+      </div>
+
+      <div class="faq-item" tabindex="0">
+        <div class="faq-question">
+         What is the Wishlist section for?
+          <span class="arrow">&#9654;</span>
+        </div>
+        <div class="faq-answer">
+         The wishlist lets you dream big! Add life goals like dream places, cars, or anything important to you. You can check them off once achieved.
+        </div>
+      </div>
+    </div>
+
+    
+  </section>
+
+  <!-- Section 4: Reviews -->
+ <section id="reviews">
+  <h2 style="text-align:center; margin-bottom: 30px; color: #cf5236; font-family: 'League Spartan', sans-serif;">What Readers Say</h2>
+
+  {% if latest_reviews %}
+    <div class="reviews-grid">
+      {% for review in latest_reviews %}
+        <div class="review-box">
+          <div class="username">— {{ review.user.username }}</div>
+          <p class="review-text" id="review-text-{{ forloop.counter }}">
+            {% if review.text|length > 300 %}
+              {{ review.text|slice:":300" }}
+              <span class="ellipsis">...</span>
+              <span class="full-text" style="display:none;">{{ review.text|slice:"300:" }}</span>
+            {% else %}
+              {{ review.text }}
+            {% endif %}
+          </p>
+          {% if review.text|length > 300 %}
+            <a href="javascript:void(0)" class="read-more" data-target="review-text-{{ forloop.counter }}">Read more</a>
+          {% endif %}
+          <div class="rating-stars">
+            {% for i in "12345" %}
+              {% if forloop.counter <= review.rating %}
+                <span class="star filled">★</span>
+              {% else %}
+                <span class="star">☆</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p style="color: #bbb; text-align:center;">No reviews yet. Be the first to leave one!</p>
+  {% endif %}
+</section>
+
+<style>
+  #reviews h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #cf5236;
+    font-family: 'League Spartan', sans-serif;
+  }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto 40px;
+  }
+
+  .review-box {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 260px;
+  width: 250px; /* Added width */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+}
+
+
+  .review-box:hover {
+    background-color: #cf5236;
+    color: #fff;
+  }
+
+  .review-box:hover .username,
+  .review-box:hover .review-text,
+  .review-box:hover .star {
+    color: #fff;
+  }
+
+  .review-box:hover .star.filled {
+    color: #ffd966;
+  }
+
+  .username {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .review-text {
+    flex-grow: 1;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .rating-stars {
+    text-align: center;
+  }
+
+  .star {
+    font-size: 18px;
+    color: #ccc;
+    padding: 0 2px;
+  }
+
+  .star.filled {
+    color: gold;
+  }
+
+  .read-more {
+    color: black;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const readMoreLinks = document.querySelectorAll('.read-more');
+    console.log('Found read-more links:', readMoreLinks.length);
+
+    readMoreLinks.forEach(link => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        console.log('Read more clicked:', link);
+
+        const targetId = link.getAttribute('data-target');
+        console.log('Target ID:', targetId);
+
+        const reviewText = document.getElementById(targetId);
+        console.log('Review text element:', reviewText);
+
+        if (!reviewText) {
+          console.error('No review text element found for ID:', targetId);
+          return;
+        }
+
+        const ellipsis = reviewText.querySelector('.ellipsis');
+        const fullText = reviewText.querySelector('.full-text');
+
+        console.log('ellipsis:', ellipsis, 'fullText:', fullText);
+
+        // alert(fullText.style.display)
+        // alert(ellipsis.style.display)
+
+        if (fullText.style.display === 'none' || fullText.style.display === '') {
+          fullText.style.display = 'inline';
+          ellipsis.style.display = 'none';
+          link.textContent = 'Read less';
+          // alert("1");
+        } else {
+          fullText.style.display = 'none';
+          ellipsis.style.display = 'inline';
+          link.textContent = 'Read more';
+          // alert("2");
+        }
+      });
+    });
+  });
+</script>
+
+
+  <!-- Section 5: Footer -->
+  <footer style="background-color: #1e1e1e; color: #f1f1f1; padding: 40px 20px; font-family: 'Segoe UI', sans-serif;">
+ <!-- Footer Div -->
+<div style="background-color: #1e1e1e; color: #f1f1f1; padding: 40px 20px; font-family: 'Segoe UI', sans-serif;">
+  <div style="max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
+
+    <!-- Branding & Social -->
+    <div style="flex: 1 1 250px;">
+      <div style=" font-size: 24px;"> MyBookJournal</div>
+      <p style="font-size: 14px; color: #ccc;">
+        Your space to reflect on every page you turn.
+      </p>
+      <div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" width="24" style="margin: 5px;">
+       <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube" width="30" style="margin: 5px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" width="24" style="margin: 5px;">
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div style="flex: 1 1 150px;">
+      <h4 style="margin-bottom: 10px;">Features</h4>
+      <ul style="list-style: none; padding: 0; font-size: 14px;">
+        <li><a href="#" style="color: #aaa; text-decoration: none;">Write Reviews</a></li>
+        <li><a href="#" style="color: #aaa; text-decoration: none;">Track Progress</a></li>
+        <li><a href="#" style="color: #aaa; text-decoration: none;">Reading Challenges</a></li>
+      </ul>
+    </div>
+
+    <!-- More -->
+    <div style="flex: 1 1 150px;">
+      <h4 style="margin-bottom: 10px;">More</h4>
+      <ul style="list-style: none; padding: 0; font-size: 14px;">
+        <li><a href="#" style="color: #aaa; text-decoration: none;">FAQ</a></li>
+        <li><a href="#" style="color: #aaa; text-decoration: none;">Privacy Policy</a></li>
+        <li><a href="#" style="color: #aaa; text-decoration: none;">Terms</a></li>
+      </ul>
+    </div>
+
+    <!-- About -->
+    <div style="flex: 1 1 150px;">
+      <h4 style="margin-bottom: 10px;">About</h4>
+      <ul style="list-style: none; padding: 0; font-size: 14px;">
+        <li><a href="#" style="color: #aaa; text-decoration: none;">Our Story</a></li>
+        <li><a href="#" style="color: #aaa; text-decoration: none;">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- App Store Badges -->
+  <div style="text-align: center; margin-top: 30px;">
+    <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store" style="height: 40px; margin: 5px;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" style="height: 40px; margin: 5px;">
+    </div>
+
+  <!-- Footer Bottom -->
+  <div style="text-align: center; font-size: 13px; color: #888; margin-top: 30px;">
+    &copy; 2025 MyBookJournal. All rights reserved.
+  </div>
+</div>
+
+</footer>
+
+
+<script>
+  // FAQ toggle script
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const question = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    const arrow = item.querySelector('.arrow');
+
+    question.addEventListener('click', () => {
+      const isOpen = answer.classList.contains('open');
+      if (isOpen) {
+        answer.classList.remove('open');
+        arrow.classList.remove('open');
+      } else {
+        answer.classList.add('open');
+        arrow.classList.add('open');
+      }
+    });
+  });
+
+  // Carousel script
+  const carouselSlide = document.querySelector('.carousel-slide');
+  const steps = document.querySelectorAll('.step');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const dots = document.querySelectorAll('#dots .dot');
+  let counter = 0;
+
+  function updateCarousel() {
+    carouselSlide.style.transform = `translateX(${-counter * 100}%)`;
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === counter);
+    });
+  }
+
+  prevBtn.addEventListener('click', () => {
+    counter = (counter === 0) ? steps.length - 1 : counter - 1;
+    updateCarousel();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    counter = (counter === steps.length - 1) ? 0 : counter + 1;
+    updateCarousel();
+  });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      counter = index;
+      updateCarousel();
+    });
+  });
+
+  // Initialize carousel on page load
+  updateCarousel();
+</script>
+
+
+
+
+</body>
+</html>
