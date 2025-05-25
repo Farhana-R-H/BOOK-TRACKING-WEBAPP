@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <title>Profile - Book Dashboard</title>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+/>
+
  <style>
   body {
     margin: 0;
@@ -22,12 +27,16 @@
   }
 
   .profile-img {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid black;
-  }
+  width: 130px;
+  height: 130px;
+  border-radius: 50%; /* circle */
+  object-fit: cover;  /* maintain aspect, crop if needed */
+  border: 3px solid #cf5236; /* colored border to match theme */
+  box-shadow: 0 0 8px #cf5236aa; /* subtle glow */
+  display: block;
+  margin: 0 auto; /* center horizontally */
+}
+
 
   .sidebar h2 {
     margin-top: 15px;
@@ -304,6 +313,21 @@
       overflow-y: visible;
     }
   }
+  .profile-placeholder {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: #555; /* dark grey background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ddd; /* light grey icon */
+  font-size: 70px;
+  box-shadow: 0 0 10px #cf5236aa; /* subtle colored shadow */
+  border: 3px solid #cf5236; /* colored border */
+  margin: 0 auto; /* center horizontally */
+}
+
 </style>
 
 </head>
@@ -314,11 +338,13 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <div style="text-align: center;">
-      {% if user.profile.profile_picture %}
-        <img src="{{ user.profile.profile_picture.url }}" alt="Profile Image" class="profile-img" />
-      {% else %}
-        <img src="https://via.placeholder.com/80" alt="Profile Image" class="profile-img" />
-      {% endif %}
+   {% if user.profile.profile_picture %}
+  <img src="{{ user.profile.profile_picture.url }}" alt="Profile Image" class="profile-img" />
+{% else %}
+  <div class="profile-placeholder">
+    <i class="fas fa-user"></i>
+  </div>
+{% endif %}
       <h2 style="margin-top: 15px;">{{ user.username }}</h2>
      {% if user.profile.bio %}
   <div class="sidebar-bio-container">
